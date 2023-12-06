@@ -11,11 +11,11 @@ namespace KoloFortunyPL
 {
     internal class DBAccess
     {
-        public static List<Phrase> GetWords()
+        public static List<PhraseClass> GetWords()
         {
             using (var conn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = conn.Query<Phrase>("SELECT DISTINCT Phrases.Phrase, Categories.Category FROM Phrases JOIN Categories ON Categories.CategoryID = Phrases.CategoryID ORDER BY RANDOM() LIMIT 5");
+                var output = conn.Query<PhraseClass>("SELECT DISTINCT Phrases.Phrase, Categories.Category FROM Phrases JOIN Categories ON Categories.CategoryID = Phrases.CategoryID ORDER BY RANDOM() LIMIT 3");
                 return output.ToList();
             }
         }

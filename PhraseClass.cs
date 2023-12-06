@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace KoloFortunyPL
 {
-    public class Phrase
+    public class PhraseClass
     {
-        public string Name { get; set; }
+        public string Phrase { get; set; }
         public string Category { get; set; }
 
+        public PhraseClass()
+        {
+            
+        }
     }
 }

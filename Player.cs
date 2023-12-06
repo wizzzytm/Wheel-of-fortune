@@ -10,8 +10,11 @@ namespace KoloFortunyPL
     {
         public string Name { get; set; }
         public int Money { get; set; }
+        public int RoundMoney { get; set; }
         public Player(string name)
         {
+            Money = 0;
+            RoundMoney = 0;
             Name = name;
         }
     }
