@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KoloFortunyPL
 {
     public partial class Start : Form
     {
+        private string nickname = "";
+
         public Start()
         {
             InitializeComponent();
@@ -19,11 +14,21 @@ namespace KoloFortunyPL
 
         private void btnStartGame_Click(object sender, EventArgs e)
         {
-            Hide();
-            Game GameForm = new Game();
-            GameForm.Nickname = txtName.Text;
-            GameForm.Show();
+            if (!string.IsNullOrWhiteSpace(nickname))
+            {
+                Game gameForm = new Game(txtName.Text);
+                gameForm.Show();
+                Hide();
+            }
+            else
+            {
+                MessageBox.Show("Please enter a nickname before starting the game.");
+            }
+        }
 
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            nickname = txtName.Text;
         }
     }
 }

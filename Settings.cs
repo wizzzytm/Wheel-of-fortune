@@ -24,22 +24,28 @@ namespace KoloFortunyPL
 
         public void TurnChange()
         {
+
             if(TurnIndex == 3)
             {
                 TurnIndex = 0;
-
+                gameInstance.EnableBtn();
+                gameInstance.CheckboxChange();
             }
             else
             {
                 
                 TurnIndex++;
+                gameInstance.CheckboxChange();
                 gameInstance.BotRound();
                 
+
             }
         }
         public void RoundChange()
         {
             RoundIndex++;
+            gameInstance.EnableBtn();
+            gameInstance.Round();
             
         }
     }

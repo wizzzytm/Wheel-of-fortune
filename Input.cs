@@ -7,24 +7,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace KoloFortunyPL
 {
     public partial class Input : Form
     {
-        public static string Answer;
-        private Game game;
-        public Input(Game game)
+        public string InputValue { get; private set; }
+
+        public Input(bool vowel)
         {
-            this.game = game;
             InitializeComponent();
+            this.ControlBox = false;
+            if (vowel)
+            {
+                txtAnswer.MaxLength = 1;
+                txtAnswer.Size = new Size(143, 83);
+                txtAnswer.Location = new Point(167, 55);
+                txtAnswer.Font = new Font(txtAnswer.Font.FontFamily, 16);
+            }
+            else
+            {
+                txtAnswer.Location = new Point(39, 12);
+                txtAnswer.Size = new Size(406, 150);
+                txtAnswer.Font = new Font(txtAnswer.Font.FontFamily, 14);
+                txtAnswer.TextAlign = HorizontalAlignment.Left;
+            }
         }
 
         private void btnGuess_Click(object sender, EventArgs e)
         {
-            Answer = String.Concat(txtAnswer.Text.ToUpper().Where(c => !Char.IsWhiteSpace(c)));
-            Game.answerInput?.TrySetResult(true);
-            game.Show();
+            InputValue = txtAnswer.Text;
+            DialogResult = DialogResult.OK;
             Close();
         }
     }

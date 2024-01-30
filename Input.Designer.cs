@@ -53,22 +53,25 @@
             this.btnGuess.Name = "btnGuess";
             this.btnGuess.Size = new System.Drawing.Size(123, 71);
             this.btnGuess.TabIndex = 4;
-            this.btnGuess.Text = "Guess";
+            this.btnGuess.Text = "Submit";
             this.btnGuess.UseVisualStyleBackColor = false;
             this.btnGuess.Click += new System.EventHandler(this.btnGuess_Click);
             // 
             // txtAnswer
             // 
+            this.txtAnswer.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtAnswer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtAnswer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txtAnswer.Location = new System.Drawing.Point(39, 12);
             this.txtAnswer.Multiline = true;
             this.txtAnswer.Name = "txtAnswer";
             this.txtAnswer.Size = new System.Drawing.Size(406, 150);
             this.txtAnswer.TabIndex = 5;
+            this.txtAnswer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Input
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(482, 272);
             this.Controls.Add(this.txtAnswer);

@@ -15,7 +15,7 @@ namespace KoloFortunyPL
         {
             using (var conn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = conn.Query<PhraseClass>("SELECT DISTINCT Phrases.Phrase, Categories.Category FROM Phrases JOIN Categories ON Categories.CategoryID = Phrases.CategoryID ORDER BY RANDOM() LIMIT 3");
+                var output = conn.Query<PhraseClass>("SELECT DISTINCT Phrases.Phrase, Categories.Category FROM Phrases JOIN Categories ON Categories.CategoryID = Phrases.CategoryID ORDER BY RANDOM() LIMIT 2");
                 return output.ToList();
             }
         }

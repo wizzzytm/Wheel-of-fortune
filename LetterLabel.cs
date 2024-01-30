@@ -16,12 +16,12 @@ namespace KoloFortunyPL
         {
             InitializeComponent();
         }
-        public string Text
+        public override string Text
         {
             get { return label1.Text; }
             set { label1.Text = value; }
         }
-        public Color BackColor
+        public override Color BackColor
         {
             get { return label1.BackColor; }
             set { label1.BackColor = value; }

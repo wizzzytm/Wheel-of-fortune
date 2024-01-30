@@ -55,6 +55,7 @@
             this.txtName.Size = new System.Drawing.Size(283, 52);
             this.txtName.TabIndex = 1;
             this.txtName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // btnStartGame
             // 

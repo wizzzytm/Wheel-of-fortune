@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0BE847A6-DDE6-4E85-9560-B3EBE1DE8CD8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>KoloFortunyPL</RootNamespace>
-    <AssemblyName>KoloFortunyPL</AssemblyName>
+    <RootNamespace>WheelOfFortune</RootNamespace>
+    <AssemblyName>WheelOfFortune</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -24,6 +24,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -94,6 +96,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WheelExceptionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WheelExceptionControl.Designer.cs">
+      <DependentUpon>WheelExceptionControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Game.resx">
       <DependentUpon>Game.cs</DependentUpon>
     </EmbeddedResource>
@@ -110,6 +118,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WheelExceptionControl.resx">
+      <DependentUpon>WheelExceptionControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
