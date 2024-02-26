@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace KoloFortunyPL
+namespace WheelOfFortune
 {
     public partial class Start : Form
     {

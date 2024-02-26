@@ -1,4 +1,4 @@
-﻿namespace KoloFortunyPL
+﻿namespace WheelOfFortune
 {
     partial class Input
     {

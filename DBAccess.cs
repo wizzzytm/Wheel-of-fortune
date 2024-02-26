@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 
-namespace KoloFortunyPL
+namespace WheelOfFortune
 {
     internal class DBAccess
     {
@@ -15,7 +15,7 @@ namespace KoloFortunyPL
         {
             using (var conn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = conn.Query<PhraseClass>("SELECT DISTINCT Phrases.Phrase, Categories.Category FROM Phrases JOIN Categories ON Categories.CategoryID = Phrases.CategoryID ORDER BY RANDOM() LIMIT 2");
+                var output = conn.Query<PhraseClass>("SELECT DISTINCT Phrases.Phrase, Categories.Category FROM Phrases JOIN Categories ON Categories.CategoryID = Phrases.CategoryID ORDER BY RANDOM() LIMIT 3");
                 return output.ToList();
             }
         }

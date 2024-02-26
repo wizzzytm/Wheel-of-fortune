@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace KoloFortunyPL
+namespace WheelOfFortune
 {
     public class Settings
     {
@@ -28,22 +28,28 @@ namespace KoloFortunyPL
             if(TurnIndex == 3)
             {
                 TurnIndex = 0;
-                gameInstance.EnableBtn();
-                gameInstance.CheckboxChange();
+                gameInstance.Invoke((MethodInvoker)delegate {
+                    gameInstance.EnableBtn();
+                    gameInstance.CheckboxChange();
+                });
             }
             else
             {
                 
                 TurnIndex++;
-                gameInstance.CheckboxChange();
-                gameInstance.BotRound();
-                
-
+                gameInstance.Invoke((MethodInvoker)delegate {
+                    gameInstance.CheckboxChange();
+                    gameInstance.BotRound();
+                });
             }
         }
         public void RoundChange()
         {
             RoundIndex++;
+            gameInstance.lblMoney1.Text = "0";
+            gameInstance.lblMoney2.Text = "0";
+            gameInstance.lblMoney3.Text = "0";
+            gameInstance.lblMoney4.Text = "0";
             gameInstance.EnableBtn();
             gameInstance.Round();
             

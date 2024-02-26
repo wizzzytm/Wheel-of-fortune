@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KoloFortunyPL
+namespace WheelOfFortune
 {
     public class Player
     {

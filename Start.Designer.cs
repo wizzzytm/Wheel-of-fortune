@@ -1,4 +1,4 @@
-﻿namespace KoloFortunyPL
+﻿namespace WheelOfFortune
 {
     partial class Start
     {
@@ -59,7 +59,7 @@
             // 
             // btnStartGame
             // 
-            this.btnStartGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnStartGame.BackColor = System.Drawing.Color.Lime;
             this.btnStartGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStartGame.Font = new System.Drawing.Font("Trebuchet MS", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnStartGame.Location = new System.Drawing.Point(244, 315);

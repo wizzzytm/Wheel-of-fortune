@@ -16,7 +16,8 @@ using System.Windows.Forms;
 using Fare;
 using WheelOfFortune;
 
-namespace KoloFortunyPL
+
+namespace WheelOfFortune
 {
 
     public partial class Game : Form
@@ -54,10 +55,6 @@ namespace KoloFortunyPL
             InitializeComponent();
             this.Controls.Add(label1);
             Phrases = DBAccess.GetWords();
-            PhraseClass test = new PhraseClass();
-            test.Phrase = "Formula 1 racing";
-            test.Category = "Sport";
-            Phrases.Add(test);
             settings = new Settings(this);
             Players.Add(new Player(Nickname));
             Players.Add(new Player("Krzysztof"));
@@ -73,7 +70,7 @@ namespace KoloFortunyPL
             DisableAll();
             if (await ProcessMoney())
             {
-                DisableBtn();
+                
                 return;
             }
 
@@ -83,9 +80,13 @@ namespace KoloFortunyPL
 
         public void Round()
         {
+            foreach (var player in Players)
+            {
+                player.RoundMoney = 0;
+            }
             if (settings.RoundIndex == 3)
             {
-                MessageBox.Show("KONIEC");
+                EndGame();
             }
             else
             {
@@ -148,7 +149,13 @@ namespace KoloFortunyPL
             }
         }
 
-
+        private void EndGame()
+        {
+            var winner = Players.OrderByDescending(item => item.Money).First();
+            End end = new End(winner.Name, Nickname);
+            end.Show();
+            this.Close();
+        }
 
         private void openInput(bool ez)
         {
@@ -162,12 +169,10 @@ namespace KoloFortunyPL
 
         private async void btnGuessCon(object sender, EventArgs e)
         {
-            if (!RegexCheck(txtLetter.Text, 0))
+            if(txtLetter.Text == null ||  txtLetter.Text.Length == 0 || txtLetter.Text == string.Empty || txtLetter.Text == "")
             {
-                MessageBox.Show("Insert a consonant!");
                 return;
             }
-
             LetterAnim(txtLetter.Text);
 
             await Task.Run(() =>
@@ -204,11 +209,19 @@ namespace KoloFortunyPL
                         txtLetter.Clear();
                         settings.TurnChange();
                     }
+                    else if(letterCheckResult == 2)
+                    {
+                        await Task.Delay(2000);
+                        CorrectOrNotAnim(false);
+                        txtLetter.Clear();
+                        settings.TurnChange();
+                    }
                 });
             });
 
             usedLetters.Add(txtLetter.Text);
             CheckCons();
+            DisableAll();
         }
 
 
@@ -240,12 +253,12 @@ namespace KoloFortunyPL
 
             do
             {
-                Debug.WriteLine(settings.TurnIndex);
-
                 // Check if a bankrupt occurred during wheel spinning
                 if (await ProcessMoney())
                 {
-                    return;
+                    Debug.WriteLine("enablebtn is being invoked");
+                    EnableBtn();
+                    break;
                 }
 
                 do
@@ -272,16 +285,17 @@ namespace KoloFortunyPL
                             }
                         }
                     }
+                    UpdateMoney();
                 }
                 else if (CheckLetter(letter) == 1)
                 {
+                    await Task.Delay(2000);
+                    CorrectOrNotAnim(false);
                     break;
                 }
             }
             while (true);
-
-            await Task.Delay(2000);
-            CorrectOrNotAnim(false);
+            UpdateMoney();
             settings.TurnChange();
         }
 
@@ -299,7 +313,7 @@ namespace KoloFortunyPL
             
         }
 
-        private void DiasbleAll()
+        private void DisbleAll()
         {
             foreach (Control c in panelControls.Controls)
             {
@@ -337,6 +351,14 @@ namespace KoloFortunyPL
         private async Task<bool> ProcessMoney()
         {
             moneySpinned = Money[random.Next(Money.Length)];
+            if(settings.TurnIndex == 2)
+            {
+                moneySpinned = 0;
+            }
+            if (settings.TurnIndex == 0)
+            {
+                moneySpinned = 0;
+            }
             this.Invoke((MethodInvoker)delegate
             {
                 lblMoney.Text = "Spinning the wheel";
@@ -378,10 +400,15 @@ namespace KoloFortunyPL
                     Debug.WriteLine(bancrupt.Size);
                     await Task.Delay(1500);
                     Controls.Remove(bancrupt);
+                    EnableBtn();
+                    if(settings.TurnIndex == 0)
+                    {
+                        BotRound();
+                    }
                 });
 
-                settings.TurnChange();
-                return true;  // Indicates a bankrupt occurred
+                return true;
+
             }
             else if (moneySpinned == 1)
             {
@@ -396,9 +423,14 @@ namespace KoloFortunyPL
                     Debug.WriteLine(stop.Size);
                     await Task.Delay(1500);
                     Controls.Remove(stop);
+                    EnableBtn();
+                    if (settings.TurnIndex == 0)
+                    {
+                        BotRound();
+                    }
                 });
-                settings.TurnChange();
-                return true;  // Indicates a stop occurred
+                return true;
+
             }
 
             return false;  // Indicates no exception occurred
@@ -515,6 +547,7 @@ namespace KoloFortunyPL
         {
             string[] words = settings.CurrentPhrase.Split(' ');
             currentPhrase = settings.CurrentPhrase.ToCharArray().ToList();
+
             foreach (var x in currentPhrase)
             {
                 char.ToUpper(x);
@@ -529,34 +562,32 @@ namespace KoloFortunyPL
 
                 foreach (char c in word)
                 {
-
                     LetterLabel label = new LetterLabel();
+
                     if (char.IsWhiteSpace(c))
                     {
                         label.BackColor = Color.Transparent;
                         label._BorderStyle = BorderStyle.None;
-
+                        label.Text = " ";
                     }
-                    else if(char.IsDigit(c))
+                    else if (char.IsLetter(c) || char.IsDigit(c)) // Check if the character is a letter or digit
                     {
-                        label.Text = c.ToString();
-                        
-                    }
-                    else
-                    {
-
                         label.Tag = c;
                         label.Text = "";
-
                     }
+                    else // Handle other characters (special characters)
+                    {
+                        label.Text = c.ToString();
+                        label.Enabled = false; // Disable editing for special characters
+                    }
+
                     panel.Controls.Add(label);
                 }
+
                 panelGame.Controls.Add(panel);
-
-
             }
-
         }
+
 
         private int CheckLetter(string input)
         {
@@ -574,9 +605,6 @@ namespace KoloFortunyPL
             }
             else
             {
-                MessageBox.Show("Letter already used! Next turn.", "", MessageBoxButtons.OK);
-                settings.TurnChange();
-                usedLetters.Add(input);
                 return 2;
             }
         }
@@ -613,16 +641,20 @@ namespace KoloFortunyPL
         }
         public void EnableBtn()
         {
-            this.Invoke((MethodInvoker)delegate 
+            Debug.WriteLine("Thread ID: " + System.Threading.Thread.CurrentThread.ManagedThreadId);
+            this.Invoke((MethodInvoker)delegate
             {
-                btnMoney.Enabled = true;
-                btnAnswer.Enabled = true;
-                btnVowel.Enabled = true;
-                txtLetter.Enabled = false;
-                btnGuess.Enabled = false;
+                if (settings.TurnIndex == 0) // Only enable buttons if it's the user's turn
+                {
+                    btnMoney.Enabled = true;
+                    btnAnswer.Enabled = true;
+                    btnVowel.Enabled = true;
+                    txtLetter.Enabled = false;
+                    btnGuess.Enabled = false;
+                }
             });
-            
         }
+
 
         public void DisableBtn() 
         {
@@ -700,6 +732,7 @@ namespace KoloFortunyPL
                 c.Visible = false;
             }
             btnNextRound.Visible = true;
+            btnNextRound.Enabled = true;
         }
 
         private void btnNextRound_Click(object sender, EventArgs e)

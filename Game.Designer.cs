@@ -1,4 +1,4 @@
-﻿namespace KoloFortunyPL
+﻿namespace WheelOfFortune
 {
     partial class Game
     {
@@ -399,16 +399,16 @@
         private System.Windows.Forms.FlowLayoutPanel panelGame;
         private System.Windows.Forms.Button btnNextRound;
         private System.Windows.Forms.Label lblPlayer4;
-        private System.Windows.Forms.Label lblMoney4;
         private System.Windows.Forms.Label lblPlayer3;
-        private System.Windows.Forms.Label lblMoney3;
         private System.Windows.Forms.Label lblPlayer2;
-        private System.Windows.Forms.Label lblMoney2;
         private System.Windows.Forms.Label lblPlayer1;
-        private System.Windows.Forms.Label lblMoney1;
         private System.Windows.Forms.Button btnRound4;
         private System.Windows.Forms.Button btnRound3;
         private System.Windows.Forms.Button btnRound2;
         private System.Windows.Forms.Button btnRound1;
+        public System.Windows.Forms.Label lblMoney4;
+        public System.Windows.Forms.Label lblMoney3;
+        public System.Windows.Forms.Label lblMoney2;
+        public System.Windows.Forms.Label lblMoney1;
     }
 }
